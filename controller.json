@@ -1,6 +1,6 @@
 {
 	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
-	"contentVersion": "1.0.0.0",
+	"contentVersion": "0.0.0.0",
 	"parameters": {
 		"identifier": {
 			"type": "string",
@@ -280,14 +280,14 @@
 		},
 		"administratorEmail": {
 			"type": "string",
-			"minLength": 1,
+			"defaultValue": "",
 			"metadata": {
 				"description": "The email address for the initial LGTM Enterprise administrator account."
 			}
 		},
 		"administratorPassword": {
 			"type": "securestring",
-			"minLength": 8,
+			"defaultValue": "",
 			"metadata": {
 				"description": "The password for the initial LGTM Enterprise administrator account. It is recommended that you change this after the instance has booted."
 			}
