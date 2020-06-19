@@ -482,12 +482,28 @@
 			}
 		},
 		{
+			"type": "Microsoft.Compute/disks",
+			"apiVersion": "2019-11-01",
+			"name": "[variables('dataDiskName')]",
+			"location": "[resourceGroup().location]",
+			"sku": {
+				"name": "[variables('storageAccountType')]"
+			},
+			"properties": {
+				"creationData": {
+					"createOption": "Empty"
+				},
+				"diskSizeGB": "[parameters('dataDiskSizeGB')]"
+			}
+		},
+		{
 			"type": "Microsoft.Compute/virtualMachines",
 			"apiVersion": "2019-07-01",
 			"name": "[variables('virtualMachineName')]",
 			"location": "[resourceGroup().location]",
 			"dependsOn": [
-				"[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceName'))]"
+				"[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceName'))]",
+				"[resourceId('Microsoft.Compute/disks', variables('dataDiskName'))]"
 			],
 			"properties": {
 				"hardwareProfile": {
@@ -524,11 +540,10 @@
 					"dataDisks": [
 						{
 							"name": "[variables('dataDiskName')]",
-							"diskSizeGB": "[parameters('dataDiskSizeGB')]",
-							"createOption": "Empty",
+							"createOption": "Attach",
 							"lun": 0,
 							"managedDisk": {
-								"storageAccountType": "[variables('storageAccountType')]"
+								"id": "[resourceId('Microsoft.Compute/disks', variables('dataDiskName'))]"
 							}
 						}
 					]
