@@ -8,7 +8,7 @@
 			"maxLength": 16,
 			"defaultValue": "lgtm",
 			"metadata": {
-				"description": "A unique identifier for resources related to this LGTM Enterprise deployment. Must contain only lower-case letters and numbers."
+				"description": "A unique identifier for resources related to this LGTM Enterprise deployment. Must contain only lower-case letters and numbers. If you are upgrading from a previous version, this should match the identifier used for the previous version."
 			}
 		},
 		"virtualMachineUsername": {
@@ -274,7 +274,7 @@
 		"dataDiskSizeGB": {
 			"type": "int",
 			"metadata": {
-				"description": "The data disk size for your LGTM Enterprise instance in gigabytes."
+				"description": "The data disk size for your LGTM Enterprise instance in gigabytes. If you are upgrading from a previous version, this should match the data disk size used for the previous version."
 			},
 			"defaultValue": 1024
 		},
@@ -282,7 +282,7 @@
 			"type": "string",
 			"defaultValue": "",
 			"metadata": {
-				"description": "The email address for the initial LGTM Enterprise administrator account."
+				"description": "The email address for the initial LGTM Enterprise administrator account. If you are upgrading from a previous version and already have an account this can be left blank."
 			}
 		},
 		"administratorPassword": {
@@ -324,7 +324,7 @@
 			"type": "securestring",
 			"defaultValue": "",
 			"metadata": {
-				"description": "A password used to encrypt the LGTM manifest. If not specified a password will be generated and stored in `/data/lgtm-releases/.manifest-password`."
+				"description": "A password used to encrypt the LGTM manifest. If not specified a password will be generated and stored in `/data/lgtm-releases/.manifest-password`. If you are upgrading from a previous version, this should match the manifest password used for the previous version."
 			}
 		}
 	},
