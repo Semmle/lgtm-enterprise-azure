@@ -22,14 +22,16 @@
 		},
 		"virtualMachineUsername": {
 			"type": "string",
+			"defaultValue": "",
 			"metadata": {
-				"description": "Username for SSH access to the virtual machine."
+				"description": "Username for SSH access to the virtual machine. You can leave this blank and configure SSH access to the virtual machine later through the Azure \"reset password\" feature."
 			}
 		},
 		"virtualMachinePublicKey": {
 			"type": "string",
+			"defaultValue": "",
 			"metadata": {
-				"description": "SSH public key for SSH access to the virtual machine."
+				"description": "SSH public key for SSH access to the virtual machine. You can leave this blank and configure SSH access to the virtual machine later through the Azure \"reset password\" feature."
 			}
 		},
 		"virtualMachineSize": {

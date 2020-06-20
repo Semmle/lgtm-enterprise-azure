@@ -13,14 +13,16 @@
 		},
 		"virtualMachineUsername": {
 			"type": "string",
+			"defaultValue": "lgtm-admin",
 			"metadata": {
-				"description": "Username for SSH access to the virtual machine."
+				"description": "Username for SSH access to the virtual machine. You can leave this blank and configure SSH access to the virtual machine later through the Azure \"reset password\" feature."
 			}
 		},
 		"virtualMachinePublicKey": {
 			"type": "string",
+			"defaultValue": "",
 			"metadata": {
-				"description": "SSH public key for SSH access to the virtual machine."
+				"description": "SSH public key for SSH access to the virtual machine. You can leave this blank and configure SSH access to the virtual machine later through the Azure \"reset password\" feature."
 			}
 		},
 		"virtualMachineSize": {
@@ -342,6 +344,13 @@
 		"virtualMachineImage": "/subscriptions/af52ee2e-7255-4c7e-bf04-b8a0ad76ba3e/resourceGroups/lgtm-images/providers/Microsoft.Compute/images/lgtm-1-25-0-20200615232412-3d46e90-67993e14",
 		"dataDiskName": "[concat(parameters('identifier'), '-data')]",
 		"osDiskName": "[concat(parameters('identifier'), '-os')]",
+		"sshPublicKeys": [
+			{
+				"path": "[concat('/home/', parameters('virtualMachineUsername'), '/.ssh/authorized_keys')]",
+				"keyData": "[parameters('virtualMachinePublicKey')]"
+			}
+		],
+		"sshPublicKeysIfSet": "[if(empty(parameters('virtualMachinePublicKey')), json('null'), variables('sshPublicKeys'))]",
 		"customData": {
 			"admin-email": "[parameters('administratorEmail')]",
 			"admin-password": "[parameters('administratorPassword')]",
@@ -515,12 +524,7 @@
 					"linuxConfiguration": {
 						"disablePasswordAuthentication": true,
 						"ssh": {
-							"publicKeys": [
-								{
-									"path": "[concat('/home/', parameters('virtualMachineUsername'), '/.ssh/authorized_keys')]",
-									"keyData": "[parameters('virtualMachinePublicKey')]"
-								}
-							]
+							"publicKeys": "[variables('sshPublicKeysIfSet')]"
 						}
 					},
 					"customData": "[base64(concat('#lgtm\n', string(variables('customData'))))]"
