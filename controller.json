@@ -341,7 +341,12 @@
 		"subnetPrefix": "10.0.0.0/16",
 		"networkInterfaceName": "[parameters('identifier')]",
 		"virtualMachineName": "[parameters('identifier')]",
-		"virtualMachineImage": "/subscriptions/af52ee2e-7255-4c7e-bf04-b8a0ad76ba3e/resourceGroups/lgtm-images/providers/Microsoft.Compute/images/lgtm-1-25-0-20200615232412-3d46e90-67993e14",
+		"virtualMachineImage": {
+			"publisher": "github",
+			"offer": "lgtm-enterprise",
+			"sku": "lgtm-enterprise",
+			"version": "$version"
+		},
 		"dataDiskName": "[concat(parameters('identifier'), '-data')]",
 		"osDiskName": "[concat(parameters('identifier'), '-os')]",
 		"sshPublicKeys": [
@@ -530,16 +535,10 @@
 					"customData": "[base64(concat('#lgtm\n', string(variables('customData'))))]"
 				},
 				"storageProfile": {
-					"imageReference": {
-						"id": "[variables('virtualMachineImage')]"
-					},
+					"imageReference": "[variables('virtualMachineImage')]",
 					"osDisk": {
 						"name": "[variables('osDiskName')]",
-						"caching": "ReadWrite",
-						"createOption": "FromImage",
-						"managedDisk": {
-							"storageAccountType": "[variables('storageAccountType')]"
-						}
+						"createOption": "FromImage"
 					},
 					"dataDisks": [
 						{
