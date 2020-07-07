@@ -466,6 +466,12 @@
 											"properties": {
 												"subnet": {
 													"id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]"
+												},
+												"publicIpAddressConfiguration": {
+													"name": "public",
+													"properties": {
+														"idleTimeoutInMinutes": 15
+													}
 												}
 											}
 										}
