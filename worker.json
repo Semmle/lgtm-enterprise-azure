@@ -1,0 +1,492 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json",
+	"contentVersion": "0.0.0.0",
+	"parameters": {
+		"identifier": {
+			"type": "string",
+			"minLength": 1,
+			"maxLength": 16,
+			"defaultValue": "lgtm",
+			"metadata": {
+				"description": "A unique identifier for resources related to this LGTM Enterprise deployment. This should match the identifier used for the controller."
+			}
+		},
+		"groupName": {
+			"type": "string",
+			"minLength": 1,
+			"maxLength": 16,
+			"defaultValue": "workers",
+			"metadata": {
+				"description": "A unique name for this group of workers. Must contain only lower-case letters and numbers."
+			}
+		},
+		"virtualMachineUsername": {
+			"type": "string",
+			"defaultValue": "",
+			"metadata": {
+				"description": "Username for SSH access to the virtual machine. You can leave this blank and configure SSH access to the virtual machine later through the Azure \"reset password\" feature."
+			}
+		},
+		"virtualMachinePublicKey": {
+			"type": "string",
+			"defaultValue": "",
+			"metadata": {
+				"description": "SSH public key for SSH access to the virtual machine. You can leave this blank and configure SSH access to the virtual machine later through the Azure \"reset password\" feature."
+			}
+		},
+		"virtualMachineSize": {
+			"type": "string",
+			"metadata": {
+				"description": "The type of virtual machine to use."
+			},
+			"defaultValue": "Standard_DS2_v2",
+			"allowedValues": [
+				"Standard_B2ms",
+				"Standard_B2s",
+				"Standard_B4ms",
+				"Standard_B8ms",
+				"Standard_B12ms",
+				"Standard_B16ms",
+				"Standard_B20ms",
+				"Standard_DS2_v2",
+				"Standard_DS3_v2",
+				"Standard_DS4_v2",
+				"Standard_DS5_v2",
+				"Standard_DS11-1_v2",
+				"Standard_DS11_v2",
+				"Standard_DS12-1_v2",
+				"Standard_DS12-2_v2",
+				"Standard_DS12_v2",
+				"Standard_DS13-2_v2",
+				"Standard_DS13-4_v2",
+				"Standard_DS13_v2",
+				"Standard_DS14-4_v2",
+				"Standard_DS14-8_v2",
+				"Standard_DS14_v2",
+				"Standard_DS15_v2",
+				"Standard_F2s",
+				"Standard_F4s",
+				"Standard_F8s",
+				"Standard_F16s",
+				"Standard_D2s_v3",
+				"Standard_D4s_v3",
+				"Standard_D8s_v3",
+				"Standard_D16s_v3",
+				"Standard_D32s_v3",
+				"Standard_D2_v2",
+				"Standard_D3_v2",
+				"Standard_D4_v2",
+				"Standard_D5_v2",
+				"Standard_D11_v2",
+				"Standard_D12_v2",
+				"Standard_D13_v2",
+				"Standard_D14_v2",
+				"Standard_F2",
+				"Standard_F4",
+				"Standard_F8",
+				"Standard_F16",
+				"Standard_A2m_v2",
+				"Standard_A2_v2",
+				"Standard_A4m_v2",
+				"Standard_A4_v2",
+				"Standard_A8m_v2",
+				"Standard_A8_v2",
+				"Standard_D2_v3",
+				"Standard_D4_v3",
+				"Standard_D8_v3",
+				"Standard_D16_v3",
+				"Standard_D32_v3",
+				"Standard_D48_v3",
+				"Standard_D64_v3",
+				"Standard_D48s_v3",
+				"Standard_D64s_v3",
+				"Standard_E2_v3",
+				"Standard_E4_v3",
+				"Standard_E8_v3",
+				"Standard_E16_v3",
+				"Standard_E20_v3",
+				"Standard_E32_v3",
+				"Standard_E48_v3",
+				"Standard_E64_v3",
+				"Standard_E2s_v3",
+				"Standard_E4-2s_v3",
+				"Standard_E4s_v3",
+				"Standard_E8-2s_v3",
+				"Standard_E8-4s_v3",
+				"Standard_E8s_v3",
+				"Standard_E16-4s_v3",
+				"Standard_E16-8s_v3",
+				"Standard_E16s_v3",
+				"Standard_E20s_v3",
+				"Standard_E32-8s_v3",
+				"Standard_E32-16s_v3",
+				"Standard_E32s_v3",
+				"Standard_E48s_v3",
+				"Standard_E64-16s_v3",
+				"Standard_E64-32s_v3",
+				"Standard_E64s_v3",
+				"Standard_A3",
+				"Standard_A5",
+				"Standard_A4",
+				"Standard_A6",
+				"Standard_A7",
+				"Basic_A3",
+				"Basic_A4",
+				"Standard_D15_v2",
+				"Standard_E64i_v3",
+				"Standard_E64is_v3",
+				"Standard_H8",
+				"Standard_H16",
+				"Standard_H8m",
+				"Standard_H16m",
+				"Standard_H16r",
+				"Standard_H16mr",
+				"Standard_NV6",
+				"Standard_NV12",
+				"Standard_NV24",
+				"Standard_NC6s_v2",
+				"Standard_NC12s_v2",
+				"Standard_NC24rs_v2",
+				"Standard_NC24s_v2",
+				"Standard_F2s_v2",
+				"Standard_F4s_v2",
+				"Standard_F8s_v2",
+				"Standard_F16s_v2",
+				"Standard_F32s_v2",
+				"Standard_F48s_v2",
+				"Standard_F64s_v2",
+				"Standard_F72s_v2",
+				"Standard_NC6",
+				"Standard_NC12",
+				"Standard_NC24",
+				"Standard_NC24r",
+				"Standard_L8s_v2",
+				"Standard_L16s_v2",
+				"Standard_L32s_v2",
+				"Standard_L48s_v2",
+				"Standard_L64s_v2",
+				"Standard_L80s_v2",
+				"Standard_NV6s_v2",
+				"Standard_NV12s_v2",
+				"Standard_NV24s_v2",
+				"Standard_NV12s_v3",
+				"Standard_NV24s_v3",
+				"Standard_NV48s_v3",
+				"Standard_E2d_v4",
+				"Standard_E4d_v4",
+				"Standard_E8d_v4",
+				"Standard_E16d_v4",
+				"Standard_E20d_v4",
+				"Standard_E32d_v4",
+				"Standard_E2ds_v4",
+				"Standard_E4-2ds_v4",
+				"Standard_E4ds_v4",
+				"Standard_E8-2ds_v4",
+				"Standard_E8-4ds_v4",
+				"Standard_E8ds_v4",
+				"Standard_E16-4ds_v4",
+				"Standard_E16-8ds_v4",
+				"Standard_E16ds_v4",
+				"Standard_E20ds_v4",
+				"Standard_E32-8ds_v4",
+				"Standard_E32-16ds_v4",
+				"Standard_E32ds_v4",
+				"Standard_D2d_v4",
+				"Standard_D4d_v4",
+				"Standard_D8d_v4",
+				"Standard_D16d_v4",
+				"Standard_D32d_v4",
+				"Standard_D48d_v4",
+				"Standard_D64d_v4",
+				"Standard_D2ds_v4",
+				"Standard_D4ds_v4",
+				"Standard_D8ds_v4",
+				"Standard_D16ds_v4",
+				"Standard_D32ds_v4",
+				"Standard_D48ds_v4",
+				"Standard_D64ds_v4",
+				"Standard_DC8_v2",
+				"Standard_DC1s_v2",
+				"Standard_DC2s_v2",
+				"Standard_DC4s_v2",
+				"Standard_NP10s",
+				"Standard_NP20s",
+				"Standard_NP40s",
+				"Standard_D2",
+				"Standard_D3",
+				"Standard_D4",
+				"Standard_D11",
+				"Standard_D12",
+				"Standard_D13",
+				"Standard_D14",
+				"Standard_DS2",
+				"Standard_DS3",
+				"Standard_DS4",
+				"Standard_DS11",
+				"Standard_DS12",
+				"Standard_DS13",
+				"Standard_DS14",
+				"Standard_D2a_v4",
+				"Standard_D4a_v4",
+				"Standard_D8a_v4",
+				"Standard_D16a_v4",
+				"Standard_D32a_v4",
+				"Standard_D48a_v4",
+				"Standard_D64a_v4",
+				"Standard_D96a_v4",
+				"Standard_D2as_v4",
+				"Standard_D4as_v4",
+				"Standard_D8as_v4",
+				"Standard_D16as_v4",
+				"Standard_D32as_v4",
+				"Standard_D48as_v4",
+				"Standard_D64as_v4",
+				"Standard_D96as_v4",
+				"Standard_E2a_v4",
+				"Standard_E4a_v4",
+				"Standard_E8a_v4",
+				"Standard_E16a_v4",
+				"Standard_E20a_v4",
+				"Standard_E32a_v4",
+				"Standard_E48a_v4",
+				"Standard_E64a_v4",
+				"Standard_E96a_v4",
+				"Standard_E2as_v4",
+				"Standard_E4as_v4",
+				"Standard_E8as_v4",
+				"Standard_E16as_v4",
+				"Standard_E20as_v4",
+				"Standard_E32as_v4",
+				"Standard_E48as_v4",
+				"Standard_E64as_v4",
+				"Standard_E96as_v4",
+				"Standard_HC44rs",
+				"Standard_ND6s",
+				"Standard_ND12s",
+				"Standard_ND24rs",
+				"Standard_ND24s",
+				"Standard_DC2s",
+				"Standard_DC4s",
+				"Standard_M208ms_v2",
+				"Standard_M208s_v2",
+				"Standard_M416-208s_v2",
+				"Standard_M416s_v2",
+				"Standard_M416-208ms_v2",
+				"Standard_M416ms_v2",
+				"Standard_NC6s_v3",
+				"Standard_NC12s_v3",
+				"Standard_NC24rs_v3",
+				"Standard_NC24s_v3",
+				"Standard_PB6s",
+				"Standard_M64",
+				"Standard_M64m",
+				"Standard_M128",
+				"Standard_M128m",
+				"Standard_M8-2ms",
+				"Standard_M8-4ms",
+				"Standard_M8ms",
+				"Standard_M16-4ms",
+				"Standard_M16-8ms",
+				"Standard_M16ms",
+				"Standard_M32-8ms",
+				"Standard_M32-16ms",
+				"Standard_M32ls",
+				"Standard_M32ms",
+				"Standard_M32ts",
+				"Standard_M64-16ms",
+				"Standard_M64-32ms",
+				"Standard_M64ls",
+				"Standard_M64ms",
+				"Standard_M64s",
+				"Standard_M128-32ms",
+				"Standard_M128-64ms",
+				"Standard_M128ms",
+				"Standard_M128s",
+				"Standard_HB60rs",
+				"Standard_ND40s_v3",
+				"Standard_A8",
+				"Standard_A9",
+				"Standard_A10",
+				"Standard_A11",
+				"Standard_E48d_v4",
+				"Standard_E64d_v4",
+				"Standard_E48ds_v4",
+				"Standard_E64-16ds_v4",
+				"Standard_E64ds_v4",
+				"Standard_ND40rs_v2",
+				"Standard_NV4as_v4",
+				"Standard_NV8as_v4",
+				"Standard_NV16as_v4",
+				"Standard_NV32as_v4"
+			]
+		},
+		"workerCredentials": {
+			"type": "securestring",
+			"metadata": {
+				"description": "This should be copied from the administrator interface of the LGTM Enterprise controller."
+			}
+		},
+		"copies": {
+			"type": "int",
+			"defaultValue": 1,
+			"metadata": {
+				"description": "The number of copies of this worker to create."
+			}
+		},
+		"generalWorkers": {
+			"type": "int",
+			"defaultValue": 1,
+			"metadata": {
+				"description": "The number of general workers to run on the controller."
+			}
+		},
+		"onDemandWorkers": {
+			"type": "int",
+			"defaultValue": 0,
+			"metadata": {
+				"description": "The number of on-demand workers to run on the controller."
+			}
+		},
+		"queryWorkers": {
+			"type": "int",
+			"defaultValue": 0,
+			"metadata": {
+				"description": "The number of query workers to run on the controller."
+			}
+		},
+		"workerEnvironment": {
+			"type": "object",
+			"defaultValue": {},
+			"metadata": {
+				"description": "A dictionary of environment variables to use for the workers."
+			}
+		},
+		"manifestPassword": {
+			"type": "securestring",
+			"defaultValue": "",
+			"metadata": {
+				"description": "A password used to encrypt the LGTM manifest. If not specified a password will be generated and stored in `/data/lgtm-releases/.manifest-password`."
+			}
+		}
+	},
+	"variables": {
+		"storageAccountType": "Premium_LRS",
+		"networkSecurityGroupName": "[concat(parameters('identifier'), '-worker')]",
+		"virtualNetworkName": "[parameters('identifier')]",
+		"subnetName": "[parameters('identifier')]",
+		"virtualMachineScaleSetName": "[concat(parameters('identifier'), '-', parameters('groupName'))]",
+		"virtualMachineNamePrefix": "[concat(parameters('identifier'), '-', parameters('groupName'))]",
+		"virtualMachineImage": {
+			"publisher": "github",
+			"offer": "lgtm-enterprise",
+			"sku": "lgtm-enterprise",
+			"version": "$version"
+		},
+		"customData": {
+			"controller-hostname": "[concat(parameters('identifier'), '.internal.cloudapp.net')]",
+			"worker-credentials": "[replace(replace(parameters('workerCredentials'), 'worker-credentials: \"', ''), '\"', '')]",
+			"n-general": "[parameters('generalWorkers')]",
+			"n-on-demand": "[parameters('onDemandWorkers')]",
+			"n-query": "[parameters('queryWorkers')]",
+			"environment": "[parameters('workerEnvironment')]",
+			"manifest-password": "[parameters('manifestPassword')]"
+		}
+	},
+	"resources": [
+		{
+			"type": "Microsoft.Network/networkSecurityGroups",
+			"apiVersion": "2019-02-01",
+			"name": "[variables('networkSecurityGroupName')]",
+			"location": "[resourceGroup().location]",
+			"properties": {
+				"securityRules": [
+					{
+						"name": "ssh",
+						"properties": {
+							"description": "Administrative SSH access to the virtual machine.",
+							"protocol": "*",
+							"sourcePortRange": "*",
+							"destinationPortRange": "22",
+							"sourceAddressPrefix": "Internet",
+							"destinationAddressPrefix": "*",
+							"access": "Allow",
+							"priority": 100,
+							"direction": "Inbound"
+						}
+					}
+				]
+			}
+		},
+		{
+			"type": "Microsoft.Compute/virtualMachineScaleSets",
+			"apiVersion": "2019-07-01",
+			"name": "[variables('virtualMachineScaleSetName')]",
+			"location": "[resourceGroup().location]",
+			"dependsOn": [
+				"[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
+			],
+			"sku": {
+				"name": "[parameters('virtualMachineSize')]",
+				"capacity": "[parameters('copies')]"
+			},
+			"properties": {
+				"virtualMachineProfile": {
+					"osProfile": {
+						"computerNamePrefix": "[variables('virtualMachineNamePrefix')]",
+						"adminUsername": "[parameters('virtualMachineUsername')]",
+						"linuxConfiguration": {
+							"disablePasswordAuthentication": true,
+							"ssh": {
+								"publicKeys": [
+									{
+										"path": "[concat('/home/', parameters('virtualMachineUsername'), '/.ssh/authorized_keys')]",
+										"keyData": "[parameters('virtualMachinePublicKey')]"
+									}
+								]
+							}
+						},
+						"customData": "[base64(concat('#lgtm\n', string(variables('customData'))))]"
+					},
+					"storageProfile": {
+						"imageReference": "[variables('virtualMachineImage')]",
+						"osDisk": {
+							"createOption": "FromImage"
+						}
+					},
+					"networkProfile": {
+						"networkInterfaceConfigurations": [
+							{
+								"name": "main",
+								"properties": {
+									"primary": true,
+									"ipConfigurations": [
+										{
+											"name": "ip",
+											"properties": {
+												"subnet": {
+													"id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('virtualNetworkName'), variables('subnetName'))]"
+												},
+												"publicIpAddressConfiguration": {
+													"name": "public",
+													"properties": {
+														"idleTimeoutInMinutes": 15
+													}
+												}
+											}
+										}
+									],
+									"networkSecurityGroup": {
+										"id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]"
+									}
+								}
+							}
+						]
+					}
+				},
+				"upgradePolicy": {
+					"mode": "Automatic"
+				}
+			}
+		}
+	]
+}
