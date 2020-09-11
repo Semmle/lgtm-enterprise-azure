@@ -345,7 +345,7 @@
 			"publisher": "github",
 			"offer": "lgtm-enterprise",
 			"sku": "lgtm-enterprise",
-			"version": "$version"
+			"version": "1.25.0"
 		},
 		"dataDiskName": "[concat(parameters('identifier'), '-data')]",
 		"osDiskName": "[concat(parameters('identifier'), '-os')]",
