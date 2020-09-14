@@ -22,7 +22,7 @@
 		},
 		"virtualMachineUsername": {
 			"type": "string",
-			"defaultValue": "",
+			"defaultValue": "lgtm-admin",
 			"metadata": {
 				"description": "Username for SSH access to the virtual machine. You can leave this blank and configure SSH access to the virtual machine later through the Azure \"reset password\" feature."
 			}
