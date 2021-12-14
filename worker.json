@@ -270,7 +270,7 @@
 			"publisher": "github",
 			"offer": "lgtm-enterprise",
 			"sku": "lgtm-enterprise",
-			"version": "$version"
+			"version": "1.28.1"
 		},
 		"customData": {
 			"controller-hostname": "[concat(parameters('identifier'), '.internal.cloudapp.net')]",
